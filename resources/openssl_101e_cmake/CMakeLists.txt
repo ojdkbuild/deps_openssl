@@ -161,153 +161,158 @@ endif ( )
 message ( STATUS "Copying headers ..." )
 
 # private
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/e_os.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_os.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/cryptlib.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/cryptlib.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/md32_common.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/md32_common.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/o_time.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/o_time.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/o_str.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/o_str.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/o_dir.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/o_dir.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/constant_time_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/constant_time_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/md4/md4_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/md4_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/md5/md5_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/md5_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/sha/sha_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/sha_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ripemd/rmd_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/rmd_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ripemd/rmdconst.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/rmdconst.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/des_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/des_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/rpc_des.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/rpc_des.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/spr.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/spr.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/des_ver.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/des_ver.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/rc2/rc2_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/rc2_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/rc4/rc4_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/rc4_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/idea/idea_lcl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/idea_lcl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/bf/bf_pi.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/bf_pi.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/bf/bf_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/bf_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/cast/cast_s.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/cast_s.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/cast/cast_lcl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/cast_lcl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/aes/aes_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/aes_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/camellia/cmll_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/cmll_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/seed/seed_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/seed_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/modes/modes_lcl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/modes_lcl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/bn_lcl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/bn_lcl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/bn_prime.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/bn_prime.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/dsa/dsa_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/dsa_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/ec_lcl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/ec_lcl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdh/ech_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/ech_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdsa/ecs_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/ecs_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/bio/bio_lcl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/bio_lcl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/objects/obj_dat.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/obj_dat.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/objects/obj_xref.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/obj_xref.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/evp/evp_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/evp_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/asn1/asn1_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/asn1_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509v3/pcy_int.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/pcy_int.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/cms/cms_lcl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/cms_lcl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/conf/conf_def.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/conf_def.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ui/ui_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/ui_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/whrlpool/wp_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/wp_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl_locl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/ssl_locl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/ssl/kssl_lcl.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/kssl_lcl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/apps/apps.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/apps.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/apps/progs.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/progs.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/apps/s_apps.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/s_apps.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/apps/testdsa.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/testdsa.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/apps/testrsa.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/testrsa.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_4758cca_err.c" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_4758cca_err.c" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_4758cca_err.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_4758cca_err.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_aep_err.c" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_aep_err.c" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_aep_err.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_aep_err.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_atalla_err.c" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_atalla_err.c" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_atalla_err.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_atalla_err.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_cswift_err.c" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_cswift_err.c" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_cswift_err.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_cswift_err.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_gmp_err.c" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_gmp_err.c" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_gmp_err.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_gmp_err.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_chil_err.c" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_chil_err.c" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_chil_err.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_chil_err.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_nuron_err.c" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_nuron_err.c" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_nuron_err.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_nuron_err.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_sureware_err.c" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_sureware_err.c" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_sureware_err.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_sureware_err.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_ubsec_err.c" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_ubsec_err.c" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_ubsec_err.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_ubsec_err.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_capi_err.c" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_capi_err.c" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_capi_err.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/e_capi_err.h" COPYONLY )
-configure_file( "${CMAKE_CURRENT_LIST_DIR}/include_${${PROJECT_NAME}_TOOLCHAIN}/buildinf.h" "${CMAKE_CURRENT_BINARY_DIR}/include_private/buildinf.h" COPYONLY )
+
+file ( COPY
+        "${${PROJECT_NAME}_SOURCE_DIR}/e_os.h"
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/cryptlib.h"
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/md32_common.h"
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/o_time.h"
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/o_str.h"
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/o_dir.h"
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/constant_time_locl.h"
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/md4/md4_locl.h"
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/md5/md5_locl.h"
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/sha/sha_locl.h"
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ripemd/rmd_locl.h"
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ripemd/rmdconst.h"
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/des_locl.h"
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/rpc_des.h"
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/spr.h"
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/des_ver.h"
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/rc2/rc2_locl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/rc4/rc4_locl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/idea/idea_lcl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/bf/bf_pi.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/bf/bf_locl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/cast/cast_s.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/cast/cast_lcl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/aes/aes_locl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/camellia/cmll_locl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/seed/seed_locl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/modes/modes_lcl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/bn_lcl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/bn_prime.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/dsa/dsa_locl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/ec_lcl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdh/ech_locl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdsa/ecs_locl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/bio/bio_lcl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/objects/obj_dat.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/objects/obj_xref.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/evp/evp_locl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/asn1/asn1_locl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509v3/pcy_int.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/cms/cms_lcl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/conf/conf_def.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ui/ui_locl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/whrlpool/wp_locl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl_locl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/ssl/kssl_lcl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/apps/apps.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/apps/progs.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/apps/s_apps.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/apps/testdsa.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/apps/testrsa.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_4758cca_err.c" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_4758cca_err.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_aep_err.c" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_aep_err.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_atalla_err.c" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_atalla_err.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_cswift_err.c" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_cswift_err.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_gmp_err.c" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_gmp_err.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_chil_err.c" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_chil_err.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_nuron_err.c" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_nuron_err.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_sureware_err.c" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_sureware_err.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_ubsec_err.c" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_ubsec_err.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_capi_err.c" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/engines/e_capi_err.h" 
+        "${CMAKE_CURRENT_LIST_DIR}/include_${${PROJECT_NAME}_TOOLCHAIN}/buildinf.h"
+        DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/include_private/" )
 
 # public
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/e_os2.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/e_os2.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/crypto.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/crypto.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/opensslv.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/opensslv.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/opensslconf.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/opensslconf.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ebcdic.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/ebcdic.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/symhacks.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/symhacks.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ossl_typ.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/ossl_typ.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/md4/md4.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/md4.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/md5/md5.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/md5.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/sha/sha.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/sha.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/hmac/hmac.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/hmac.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/cmac/cmac.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/cmac.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ripemd/ripemd.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/ripemd.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/des.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/des.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/des_old.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/des_old.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/rc2/rc2.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/rc2.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/rc4/rc4.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/rc4.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/idea/idea.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/idea.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/bf/blowfish.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/blowfish.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/cast/cast.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/cast.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/aes/aes.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/aes.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/camellia/camellia.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/camellia.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/seed/seed.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/seed.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/modes/modes.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/modes.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/bn.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/bn.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/rsa/rsa.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/rsa.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/dsa/dsa.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/dsa.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/dso/dso.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/dso.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/dh/dh.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/dh.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/ec.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/ec.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdh/ecdh.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/ecdh.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdsa/ecdsa.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/ecdsa.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/buffer/buffer.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/buffer.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/bio/bio.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/bio.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/stack/stack.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/stack.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/stack/safestack.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/safestack.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/lhash/lhash.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/lhash.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/rand/rand.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/rand.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/err/err.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/err.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/objects/objects.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/objects.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/objects/obj_mac.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/obj_mac.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/evp/evp.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/evp.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/asn1/asn1.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/asn1.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/asn1/asn1_mac.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/asn1_mac.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/asn1/asn1t.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/asn1t.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/pem/pem.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/pem.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/pem/pem2.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/pem2.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509/x509.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/x509.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509/x509_vfy.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/x509_vfy.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509v3/x509v3.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/x509v3.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/cms/cms.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/cms.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/conf/conf.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/conf.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/conf/conf_api.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/conf_api.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/txt_db/txt_db.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/txt_db.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/pkcs7/pkcs7.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/pkcs7.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/pkcs12/pkcs12.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/pkcs12.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/comp/comp.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/comp.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/engine/engine.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/engine.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ocsp/ocsp.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/ocsp.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ui/ui.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/ui.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ui/ui_compat.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/ui_compat.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/krb5/krb5_asn.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/krb5_asn.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/pqueue/pqueue.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/pqueue.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/whrlpool/whrlpool.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/whrlpool.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ts/ts.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/ts.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/ssl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl2.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/ssl2.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl3.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/ssl3.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl23.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/ssl23.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/ssl/tls1.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/tls1.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/ssl/dtls1.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/dtls1.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/ssl/kssl.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/kssl.h" COPYONLY )
-configure_file( "${${PROJECT_NAME}_SOURCE_DIR}/ssl/srtp.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/srtp.h" COPYONLY )
-configure_file( "${CMAKE_CURRENT_LIST_DIR}/include_${${PROJECT_NAME}_TOOLCHAIN}/opensslconf.h" "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/opensslconf.h" COPYONLY )
+file ( COPY
+        "${${PROJECT_NAME}_SOURCE_DIR}/e_os2.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/crypto.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/opensslv.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/opensslconf.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ebcdic.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/symhacks.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ossl_typ.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/md4/md4.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/md5/md5.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/sha/sha.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/hmac/hmac.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/cmac/cmac.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ripemd/ripemd.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/des.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/des_old.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/rc2/rc2.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/rc4/rc4.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/idea/idea.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/bf/blowfish.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/cast/cast.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/aes/aes.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/camellia/camellia.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/seed/seed.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/modes/modes.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/bn.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/rsa/rsa.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/dsa/dsa.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/dso/dso.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/dh/dh.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/ec.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdh/ecdh.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdsa/ecdsa.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/buffer/buffer.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/bio/bio.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/stack/stack.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/stack/safestack.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/lhash/lhash.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/rand/rand.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/err/err.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/objects/objects.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/objects/obj_mac.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/evp/evp.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/asn1/asn1.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/asn1/asn1_mac.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/asn1/asn1t.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/pem/pem.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/pem/pem2.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509/x509.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509/x509_vfy.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509v3/x509v3.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/cms/cms.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/conf/conf.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/conf/conf_api.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/txt_db/txt_db.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/pkcs7/pkcs7.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/pkcs12/pkcs12.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/comp/comp.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/engine/engine.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ocsp/ocsp.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ui/ui.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ui/ui_compat.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/krb5/krb5_asn.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/pqueue/pqueue.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/whrlpool/whrlpool.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ts/ts.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl2.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl3.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl23.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/ssl/tls1.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/ssl/dtls1.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/ssl/kssl.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/ssl/srtp.h" 
+        "${CMAKE_CURRENT_LIST_DIR}/include_${${PROJECT_NAME}_TOOLCHAIN}/opensslconf.h" 
+        DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/include/openssl/" )
 
 # sources
 set ( ${PROJECT_NAME}_SRC )

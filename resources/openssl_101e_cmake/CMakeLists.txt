@@ -329,10 +329,10 @@ set ( ${PROJECT_NAME}_CRYPTO_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/o_fips.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/o_init.c )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "android_[^_]+_gcc" )
-    set ( ${PROJECT_NAME}_CRYPTO_SRC ${${PROJECT_NAME}_CRYPTO_SRC}
+    list ( APPEND ${PROJECT_NAME}_CRYPTO_SRC
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/mem_clr.c )
 endif ( ) 
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_SRC} )
 source_group ( "crypto" FILES ${${PROJECT_NAME}_CRYPTO_SRC} )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/x86cpuid.pl )
@@ -346,14 +346,14 @@ endif ( )
 set ( ${PROJECT_NAME}_CRYPTO_MD4_SRC 
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/md4/md4_dgst.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/md4/md4_one.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_MD4_SRC} )
+    list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_MD4_SRC} )
 source_group ( "crypto_md4" FILES ${${PROJECT_NAME}_CRYPTO_MD4_SRC} )
 
 # crypto/md5 
 set ( ${PROJECT_NAME}_CRYPTO_MD5_SRC 
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/md5/md5_dgst.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/md5/md5_one.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_MD5_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_MD5_SRC} )
 source_group ( "crypto_md5" FILES ${${PROJECT_NAME}_CRYPTO_MD5_SRC} )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/md5/asm/md5-586.pl )
@@ -369,7 +369,7 @@ set ( ${PROJECT_NAME}_CRYPTO_SHA_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/sha/sha1_one.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/sha/sha256.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/sha/sha512.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_SHA_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_SHA_SRC} )
 source_group ( "crypto_sha" FILES ${${PROJECT_NAME}_CRYPTO_SHA_SRC} )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/sha/asm/sha1-586.pl )
@@ -387,7 +387,7 @@ if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_amd64_[^_]+" )
             COMMAND nasm ${${PROJECT_NAME}_ASM_NASM_OPTIONS} -o sha256-x86_64.obj sha256-x86_64.asm
             WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR} )
     set_source_files_properties ( ${CMAKE_CURRENT_BINARY_DIR}/sha256-x86_64.asm PROPERTIES GENERATED 1 )
-    set ( ${PROJECT_NAME}_ASMOBJ ${${PROJECT_NAME}_ASMOBJ} ${CMAKE_CURRENT_BINARY_DIR}/sha256-x86_64.obj )
+list ( APPEND ${PROJECT_NAME}_ASMOBJ ${CMAKE_CURRENT_BINARY_DIR}/sha256-x86_64.obj )
 elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "linux_amd64_[^_]+" )
     # special case for sha256
     add_custom_command ( OUTPUT sha256-x86_64.s
@@ -395,7 +395,7 @@ elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "linux_amd64_[^_]+" )
             WORKING_DIRECTORY ${PROJECT_BINARY_DIR} )
     set_source_files_properties ( ${PROJECT_BINARY_DIR}/sha256-x86_64.s PROPERTIES GENERATED 1 )
     set_source_files_properties ( ${PROJECT_BINARY_DIR}/sha256-x86_64.s PROPERTIES LANGUAGE C )
-    set ( ${PROJECT_NAME}_ASMOBJ ${${PROJECT_NAME}_ASMOBJ} ${PROJECT_BINARY_DIR}/sha256-x86_64.s )
+    list ( APPEND ${PROJECT_NAME}_ASMOBJ ${PROJECT_BINARY_DIR}/sha256-x86_64.s )
 endif ( )
 
 # crypto/hmac
@@ -403,7 +403,7 @@ set ( ${PROJECT_NAME}_CRYPTO_HMAC_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/hmac/hmac.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/hmac/hm_ameth.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/hmac/hm_pmeth.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_HMAC_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_HMAC_SRC} )
 source_group ( "crypto_hmac" FILES ${${PROJECT_NAME}_CRYPTO_HMAC_SRC} )
 
 # crypto/cmac
@@ -411,14 +411,14 @@ set ( ${PROJECT_NAME}_CRYPTO_CMAC_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cmac/cmac.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cmac/cm_ameth.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cmac/cm_pmeth.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_CMAC_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_CMAC_SRC} )
 source_group ( "crypto_cmac" FILES ${${PROJECT_NAME}_CRYPTO_CMAC_SRC} )
 
 # crypto/ripemd
 set ( ${PROJECT_NAME}_CRYPTO_RIPEMD_SRC 
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ripemd/rmd_dgst.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ripemd/rmd_one.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_RIPEMD_SRC} )
+    list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_RIPEMD_SRC} )
 source_group ( "crypto_ripemd" FILES ${${PROJECT_NAME}_CRYPTO_RIPEMD_SRC} )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ripemd/asm/rmd-586.pl )
@@ -451,15 +451,15 @@ set ( ${PROJECT_NAME}_CRYPTO_DES_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/des_old2.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/read2pwd.c )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_amd64_[^_]+" )
-    set ( ${PROJECT_NAME}_CRYPTO_DES_SRC ${${PROJECT_NAME}_CRYPTO_DES_SRC}
+    list ( APPEND ${PROJECT_NAME}_CRYPTO_DES_SRC
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/des_enc.c
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/fcrypt_b.c )
 elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "android_[^_]+_gcc" )
-    set ( ${PROJECT_NAME}_CRYPTO_DES_SRC ${${PROJECT_NAME}_CRYPTO_DES_SRC}
+    list ( APPEND ${PROJECT_NAME}_CRYPTO_DES_SRC
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/des_enc.c
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/fcrypt_b.c )
 endif ( ) 
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_DES_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_DES_SRC} )
 source_group ( "crypto_des" FILES ${${PROJECT_NAME}_CRYPTO_DES_SRC} )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/des/asm/des-586.pl )
@@ -473,18 +473,18 @@ set ( ${PROJECT_NAME}_CRYPTO_RC2_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/rc2/rc2_cbc.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/rc2/rc2cfb64.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/rc2/rc2ofb64.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_RC2_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_RC2_SRC} )
 source_group ( "crypto_rc2" FILES ${${PROJECT_NAME}_CRYPTO_RC2_SRC} )
 
 # crypto/rc4
 set ( ${PROJECT_NAME}_CRYPTO_RC4_SRC 
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/rc4/rc4_utl.c )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "android_[^_]+_gcc" )
-    set ( ${PROJECT_NAME}_CRYPTO_RC4_SRC ${${PROJECT_NAME}_CRYPTO_RC4_SRC}
+    list ( APPEND ${PROJECT_NAME}_CRYPTO_RC4_SRC
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/rc4/rc4_enc.c
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/rc4/rc4_skey.c )
 endif ( )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_RC4_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_RC4_SRC} )
 source_group ( "crypto_rc4" FILES ${${PROJECT_NAME}_CRYPTO_RC4_SRC} )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/rc4/asm/rc4-586.pl )
@@ -500,7 +500,7 @@ set ( ${PROJECT_NAME}_CRYPTO_IDEA_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/idea/i_ofb64.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/idea/i_ecb.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/idea/i_skey.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_IDEA_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_IDEA_SRC} )
 source_group ( "crypto_idea" FILES ${${PROJECT_NAME}_CRYPTO_IDEA_SRC} )
 
 # crypto/bf
@@ -510,13 +510,13 @@ set ( ${PROJECT_NAME}_CRYPTO_BF_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bf/bf_cfb64.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bf/bf_ofb64.c )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_amd64_[^_]+" )
-    set ( ${PROJECT_NAME}_CRYPTO_BF_SRC ${${PROJECT_NAME}_CRYPTO_BF_SRC}
+    list ( APPEND ${PROJECT_NAME}_CRYPTO_BF_SRC
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bf/bf_enc.c )
 elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "android_[^_]+_gcc" )
-    set ( ${PROJECT_NAME}_CRYPTO_BF_SRC ${${PROJECT_NAME}_CRYPTO_BF_SRC}
+    list ( APPEND ${PROJECT_NAME}_CRYPTO_BF_SRC
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bf/bf_enc.c )
 endif ( ) 
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_BF_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_BF_SRC} )
 source_group ( "crypto_bf" FILES ${${PROJECT_NAME}_CRYPTO_BF_SRC} )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bf/asm/bf-586.pl )
@@ -529,13 +529,13 @@ set ( ${PROJECT_NAME}_CRYPTO_CAST_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cast/c_cfb64.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cast/c_ofb64.c )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_amd64_[^_]+" )
-    set ( ${PROJECT_NAME}_CRYPTO_CAST_SRC ${${PROJECT_NAME}_CRYPTO_CAST_SRC}
+    list ( APPEND ${PROJECT_NAME}_CRYPTO_CAST_SRC
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cast/c_enc.c )
 elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "android_[^_]+_gcc" )
-    set ( ${PROJECT_NAME}_CRYPTO_CAST_SRC ${${PROJECT_NAME}_CRYPTO_CAST_SRC}
+    list ( APPEND ${PROJECT_NAME}_CRYPTO_CAST_SRC
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cast/c_enc.c )
 endif ( ) 
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_CAST_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_CAST_SRC} )
 source_group ( "crypto_cast" FILES ${${PROJECT_NAME}_CRYPTO_CAST_SRC} )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cast/asm/cast-586.pl )
@@ -551,11 +551,11 @@ set ( ${PROJECT_NAME}_CRYPTO_AES_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/aes/aes_ige.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/aes/aes_wrap.c )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "android_[^_]+_gcc" ) 
-    set ( ${PROJECT_NAME}_CRYPTO_AES_SRC ${${PROJECT_NAME}_CRYPTO_AES_SRC}
+    list ( APPEND ${PROJECT_NAME}_CRYPTO_AES_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/aes/aes_core.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/aes/aes_cbc.c )
 endif ( )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_AES_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_AES_SRC} )
 source_group ( "crypto_aes" FILES ${${PROJECT_NAME}_CRYPTO_AES_SRC} )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/aes/asm/aes-586.pl )
@@ -577,15 +577,15 @@ set ( ${PROJECT_NAME}_CRYPTO_CAMELLIA_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/camellia/cmll_ctr.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/camellia/cmll_utl.c )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_amd64_[^_]+" )
-    set ( ${PROJECT_NAME}_CRYPTO_CAMELLIA_SRC ${${PROJECT_NAME}_CRYPTO_CAMELLIA_SRC}
+    list ( APPEND ${PROJECT_NAME}_CRYPTO_CAMELLIA_SRC
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/camellia/cmll_misc.c )
 elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "android_[^_]+_gcc" )
-    set ( ${PROJECT_NAME}_CRYPTO_CAMELLIA_SRC ${${PROJECT_NAME}_CRYPTO_CAMELLIA_SRC}
+    list ( APPEND ${PROJECT_NAME}_CRYPTO_CAMELLIA_SRC
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/camellia/camellia.c 
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/camellia/cmll_misc.c 
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/camellia/cmll_cbc.c )
 endif ( ) 
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_CAMELLIA_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_CAMELLIA_SRC} )
 source_group ( "crypto_camellia" FILES ${${PROJECT_NAME}_CRYPTO_CAMELLIA_SRC} )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/camellia/asm/cmll-x86.pl )
@@ -600,7 +600,7 @@ set ( ${PROJECT_NAME}_CRYPTO_SEED_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/seed/seed_cbc.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/seed/seed_cfb.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/seed/seed_ofb.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_SEED_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_SEED_SRC} )
 source_group ( "crypto_seed" FILES ${${PROJECT_NAME}_CRYPTO_SEED_SRC} )
 
 # crypto/modes
@@ -614,7 +614,7 @@ set ( ${PROJECT_NAME}_CRYPTO_MODES_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/modes/ccm128.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/modes/xts128.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/modes/wrap128.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_MODES_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_MODES_SRC} )
 source_group ( "crypto_modes" FILES ${${PROJECT_NAME}_CRYPTO_MODES_SRC} )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/modes/asm/ghash-x86.pl )
@@ -652,16 +652,16 @@ set ( ${PROJECT_NAME}_CRYPTO_BN_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/bn_const.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/bn_x931p.c )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_amd64_[^_]+" )
-    set ( ${PROJECT_NAME}_CRYPTO_BN_SRC ${${PROJECT_NAME}_CRYPTO_BN_SRC}
+    list ( APPEND ${PROJECT_NAME}_CRYPTO_BN_SRC
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/bn_asm.c )
 elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "android_[^_]+_gcc" )
-    set ( ${PROJECT_NAME}_CRYPTO_BN_SRC ${${PROJECT_NAME}_CRYPTO_BN_SRC}
+    list ( APPEND ${PROJECT_NAME}_CRYPTO_BN_SRC
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/bn_asm.c )
 elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "linux_amd64_gcc+" )
-    set ( ${PROJECT_NAME}_CRYPTO_BN_SRC ${${PROJECT_NAME}_CRYPTO_BN_SRC}
+    list ( APPEND ${PROJECT_NAME}_CRYPTO_BN_SRC
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/asm/x86_64-gcc.c )
 endif ( ) 
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_BN_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_BN_SRC} )
 source_group ( "crypto_bn" FILES ${${PROJECT_NAME}_CRYPTO_BN_SRC} )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/asm/bn-586.pl )
@@ -697,7 +697,7 @@ set ( ${PROJECT_NAME}_CRYPTO_RSA_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/rsa/rsa_prn.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/rsa/rsa_pmeth.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/rsa/rsa_crpt.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_RSA_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_RSA_SRC} )
 source_group ( "crypto_rsa" FILES ${${PROJECT_NAME}_CRYPTO_RSA_SRC} )
 
 # crypto/dsa
@@ -714,7 +714,7 @@ set ( ${PROJECT_NAME}_CRYPTO_DSA_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/dsa/dsa_ameth.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/dsa/dsa_pmeth.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/dsa/dsa_prn.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_DSA_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_DSA_SRC} )
 source_group ( "crypto_dsa" FILES ${${PROJECT_NAME}_CRYPTO_DSA_SRC} )
 
 # crypto/dso
@@ -728,7 +728,7 @@ set ( ${PROJECT_NAME}_CRYPTO_DSO_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/dso/dso_win32.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/dso/dso_vms.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/dso/dso_beos.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_DSO_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_DSO_SRC} )
 source_group ( "crypto_dso" FILES ${${PROJECT_NAME}_CRYPTO_DSO_SRC} )
 
 # crypto/dh
@@ -743,7 +743,7 @@ set ( ${PROJECT_NAME}_CRYPTO_DH_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/dh/dh_ameth.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/dh/dh_pmeth.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/dh/dh_prn.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_DH_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_DH_SRC} )
 source_group ( "crypto_dh" FILES ${${PROJECT_NAME}_CRYPTO_DH_SRC} )
 
 # crypto/ec
@@ -772,7 +772,7 @@ set ( ${PROJECT_NAME}_CRYPTO_EC_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/ecp_oct.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/ec2_oct.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/ec_oct.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_EC_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_EC_SRC} )
 source_group ( "crypto_ec" FILES ${${PROJECT_NAME}_CRYPTO_EC_SRC} )
 
 
@@ -782,7 +782,7 @@ set ( ${PROJECT_NAME}_CRYPTO_ECDH_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdh/ech_ossl.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdh/ech_key.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdh/ech_err.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_ECDH_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_ECDH_SRC} )
 source_group ( "crypto_ecdh" FILES ${${PROJECT_NAME}_CRYPTO_ECDH_SRC} )
 
 # crypto/ecdsa
@@ -793,7 +793,7 @@ set ( ${PROJECT_NAME}_CRYPTO_ECDSA_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdsa/ecs_sign.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdsa/ecs_vrf.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdsa/ecs_err.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_ECDSA_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_ECDSA_SRC} )
 source_group ( "crypto_ecdsa" FILES ${${PROJECT_NAME}_CRYPTO_ECDSA_SRC} )
 
 # crypto/buffer
@@ -801,7 +801,7 @@ set ( ${PROJECT_NAME}_CRYPTO_BUFFER_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/buffer/buffer.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/buffer/buf_str.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/buffer/buf_err.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_BUFFER_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_BUFFER_SRC} )
 source_group ( "crypto_buffer" FILES ${${PROJECT_NAME}_CRYPTO_BUFFER_SRC} )
 
 # crypto/bio
@@ -825,20 +825,20 @@ set ( ${PROJECT_NAME}_CRYPTO_BIO_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bio/bss_log.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bio/bss_bio.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bio/bss_dgram.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_BIO_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_BIO_SRC} )
 source_group ( "crypto_bio" FILES ${${PROJECT_NAME}_CRYPTO_BIO_SRC} )
 
 # crypto/stack
 set ( ${PROJECT_NAME}_CRYPTO_STACK_SRC 
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/stack/stack.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_STACK_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_STACK_SRC} )
 source_group ( "crypto_stack" FILES ${${PROJECT_NAME}_CRYPTO_STACK_SRC} )
 
 # crypto/lhash
 set ( ${PROJECT_NAME}_CRYPTO_LHASH_SRC 
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/lhash/lhash.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/lhash/lh_stats.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_LHASH_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_LHASH_SRC} )
 source_group ( "crypto_lhash" FILES ${${PROJECT_NAME}_CRYPTO_LHASH_SRC} )
 
 # crypto/rand
@@ -852,7 +852,7 @@ set ( ${PROJECT_NAME}_CRYPTO_RAND_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/rand/rand_unix.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/rand/rand_os2.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/rand/rand_nw.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_RAND_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_RAND_SRC} )
 source_group ( "crypto_rand" FILES ${${PROJECT_NAME}_CRYPTO_RAND_SRC} )
 
 # crypto/err
@@ -860,7 +860,7 @@ set ( ${PROJECT_NAME}_CRYPTO_ERR_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/err/err.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/err/err_all.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/err/err_prn.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_ERR_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_ERR_SRC} )
 source_group ( "crypto_err" FILES ${${PROJECT_NAME}_CRYPTO_ERR_SRC} )
 
 # crypto/objects
@@ -870,7 +870,7 @@ set ( ${PROJECT_NAME}_CRYPTO_OBJECTS_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/objects/obj_lib.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/objects/obj_err.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/objects/obj_xref.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_OBJECTS_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_OBJECTS_SRC} )
 source_group ( "crypto_objects" FILES ${${PROJECT_NAME}_CRYPTO_OBJECTS_SRC} )
 
 # crypto/evp
@@ -932,7 +932,7 @@ set ( ${PROJECT_NAME}_CRYPTO_EVP_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/evp/m_sigver.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/evp/e_aes_cbc_hmac_sha1.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/evp/e_rc4_hmac_md5.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_EVP_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_EVP_SRC} )
 source_group ( "crypto_evp" FILES ${${PROJECT_NAME}_CRYPTO_EVP_SRC} )
 
 # crypto/asn1
@@ -1014,7 +1014,7 @@ set ( ${PROJECT_NAME}_CRYPTO_ASN1_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/asn1/p5_pbev2.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/asn1/p8_pkey.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/asn1/asn_moid.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_ASN1_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_ASN1_SRC} )
 source_group ( "crypto_asn1" FILES ${${PROJECT_NAME}_CRYPTO_ASN1_SRC} )
 
 # crypto/pem
@@ -1031,7 +1031,7 @@ set ( ${PROJECT_NAME}_CRYPTO_PEM_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/pem/pem_pk8.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/pem/pem_pkey.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/pem/pvkfmt.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_PEM_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_PEM_SRC} )
 source_group ( "crypto_pem" FILES ${${PROJECT_NAME}_CRYPTO_PEM_SRC} )
 
 # crypto/x509
@@ -1060,7 +1060,7 @@ set ( ${PROJECT_NAME}_CRYPTO_X509_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509/by_file.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509/by_dir.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509/x509_vpm.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_X509_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_X509_SRC} )
 source_group ( "crypto_x509" FILES ${${PROJECT_NAME}_CRYPTO_X509_SRC} )
 
 # crypto/x509v3
@@ -1101,7 +1101,7 @@ set ( ${PROJECT_NAME}_CRYPTO_X509V3_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509v3/pcy_lib.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509v3/v3_asid.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509v3/v3_addr.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_X509V3_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_X509V3_SRC} )
 source_group ( "crypto_x509v3" FILES ${${PROJECT_NAME}_CRYPTO_X509V3_SRC} )
 
 # crypto/cms
@@ -1119,7 +1119,7 @@ set ( ${PROJECT_NAME}_CRYPTO_CMS_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cms/cms_enc.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cms/cms_ess.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cms/cms_pwri.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_CMS_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_CMS_SRC} )
 source_group ( "crypto_cms" FILES ${${PROJECT_NAME}_CRYPTO_CMS_SRC} )
 
 # crypto/conf
@@ -1131,13 +1131,13 @@ set ( ${PROJECT_NAME}_CRYPTO_CONF_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/conf/conf_mod.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/conf/conf_mall.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/conf/conf_sap.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_CONF_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_CONF_SRC} )
 source_group ( "crypto_conf" FILES ${${PROJECT_NAME}_CRYPTO_CONF_SRC} )
 
 # crypto/txt_db
 set ( ${PROJECT_NAME}_CRYPTO_TXTDB_SRC 
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/txt_db/txt_db.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_TXTDB_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_TXTDB_SRC} )
 source_group ( "crypto_txtdb" FILES ${${PROJECT_NAME}_CRYPTO_TXTDB_SRC} )
 
 # crypto/pkcs7
@@ -1150,7 +1150,7 @@ set ( ${PROJECT_NAME}_CRYPTO_PKCS7_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/pkcs7/pk7_attr.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/pkcs7/pk7_mime.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/pkcs7/bio_pk7.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_PKCS7_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_PKCS7_SRC} )
 source_group ( "crypto_pkcs7" FILES ${${PROJECT_NAME}_CRYPTO_PKCS7_SRC} )
 
 # crypto/pkcs12
@@ -1170,7 +1170,7 @@ set ( ${PROJECT_NAME}_CRYPTO_PKCS12_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/pkcs12/pk12err.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/pkcs12/p12_p8d.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/pkcs12/p12_p8e.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_PKCS12_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_PKCS12_SRC} )
 source_group ( "crypto_pkcs12" FILES ${${PROJECT_NAME}_CRYPTO_PKCS12_SRC} )
 
 # crypto/comp
@@ -1179,7 +1179,7 @@ set ( ${PROJECT_NAME}_CRYPTO_COMP_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/comp/comp_err.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/comp/c_rle.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/comp/c_zlib.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_COMP_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_COMP_SRC} )
 source_group ( "crypto_comp" FILES ${${PROJECT_NAME}_CRYPTO_COMP_SRC} )
 
 # crypto/engine
@@ -1210,7 +1210,7 @@ set ( ${PROJECT_NAME}_CRYPTO_ENGINE_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/engine/eng_cryptodev.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/engine/eng_rsax.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/engine/eng_rdrand.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_ENGINE_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_ENGINE_SRC} )
 source_group ( "crypto_engine" FILES ${${PROJECT_NAME}_CRYPTO_ENGINE_SRC} )
 
 # crypto/ocsp
@@ -1224,7 +1224,7 @@ set ( ${PROJECT_NAME}_CRYPTO_OCSP_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ocsp/ocsp_prn.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ocsp/ocsp_vfy.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ocsp/ocsp_err.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_OCSP_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_OCSP_SRC} )
 source_group ( "crypto_ocsp" FILES ${${PROJECT_NAME}_CRYPTO_OCSP_SRC} )
 
 # crypto/ui
@@ -1234,32 +1234,32 @@ set ( ${PROJECT_NAME}_CRYPTO_UI_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ui/ui_openssl.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ui/ui_util.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ui/ui_compat.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_UI_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_UI_SRC} )
 source_group ( "crypto_ui" FILES ${${PROJECT_NAME}_CRYPTO_UI_SRC} )
 
 # crypto/krb5
 set ( ${PROJECT_NAME}_CRYPTO_KRB5_SRC 
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/krb5/krb5_asn.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_KRB5_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_KRB5_SRC} )
 source_group ( "crypto_krb5" FILES ${${PROJECT_NAME}_CRYPTO_KRB5_SRC} )
 
 # crypto/pqueue
 set ( ${PROJECT_NAME}_CRYPTO_PQUEUE_SRC 
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/pqueue/pqueue.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_PQUEUE_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_PQUEUE_SRC} )
 source_group ( "crypto_pqueue" FILES ${${PROJECT_NAME}_CRYPTO_PQUEUE_SRC} )
 
 # crypto/whrlpool
 set ( ${PROJECT_NAME}_CRYPTO_WHRLPOOL_SRC 
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/whrlpool/wp_dgst.c )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_[^_]+" )
-    set ( ${PROJECT_NAME}_CRYPTO_WHRLPOOL_SRC ${${PROJECT_NAME}_CRYPTO_WHRLPOOL_SRC}
+    list ( APPEND ${PROJECT_NAME}_CRYPTO_WHRLPOOL_SRC
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/whrlpool/wp_block.c )
 elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "android_[^_]+_gcc" )
-    set ( ${PROJECT_NAME}_CRYPTO_WHRLPOOL_SRC ${${PROJECT_NAME}_CRYPTO_WHRLPOOL_SRC}
+    list ( APPEND ${PROJECT_NAME}_CRYPTO_WHRLPOOL_SRC
             ${${PROJECT_NAME}_SOURCE_DIR}/crypto/whrlpool/wp_block.c )
 endif ( ) 
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_WHRLPOOL_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_WHRLPOOL_SRC} )
 source_group ( "crypto_whrlpool" FILES ${${PROJECT_NAME}_CRYPTO_WHRLPOOL_SRC} )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/whrlpool/asm/wp-mmx.pl )
@@ -1280,7 +1280,7 @@ set ( ${PROJECT_NAME}_CRYPTO_TS_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ts/ts_lib.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ts/ts_conf.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ts/ts_asn1.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_CRYPTO_TS_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_TS_SRC} )
 source_group ( "crypto_ts" FILES ${${PROJECT_NAME}_CRYPTO_TS_SRC} )
 
 # engines
@@ -1296,7 +1296,7 @@ set ( ${PROJECT_NAME}_ENGINES_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/engines/e_ubsec.c
         ${${PROJECT_NAME}_SOURCE_DIR}/engines/e_padlock.c
         ${${PROJECT_NAME}_SOURCE_DIR}/engines/e_capi.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_ENGINES_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_ENGINES_SRC} )
 source_group ( "engines" FILES ${${PROJECT_NAME}_ENGINES_SRC} )
 
 # ssl
@@ -1347,7 +1347,7 @@ set ( ${PROJECT_NAME}_SSL_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl_err.c
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/kssl.c
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/t1_reneg.c )
-set ( ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SRC} ${${PROJECT_NAME}_SSL_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SSL_SRC} )
 source_group ( "ssl" FILES ${${PROJECT_NAME}_SSL_SRC} )
 
 # library

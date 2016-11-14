@@ -25,7 +25,7 @@ macro ( openssl_asm_compile _path )
                 COMMAND nasm ${${PROJECT_NAME}_ASM_NASM_OPTIONS} -o ${_name}.obj ${_name}.asm
                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR} )
         set_source_files_properties ( ${PROJECT_BINARY_DIR}/${_name}.asm PROPERTIES GENERATED 1 )
-        set ( ${PROJECT_NAME}_ASMOBJ ${${PROJECT_NAME}_ASMOBJ} ${PROJECT_BINARY_DIR}/${_name}.obj )
+        list ( APPEND ${PROJECT_NAME}_ASMOBJ ${PROJECT_BINARY_DIR}/${_name}.obj )
     elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_amd64_msvc" )
         add_custom_command ( OUTPUT ${_name}.obj
                 COMMAND set ASM=nasm -f win64 -DNEAR -Ox -g
@@ -33,14 +33,14 @@ macro ( openssl_asm_compile _path )
                 COMMAND nasm ${${PROJECT_NAME}_ASM_NASM_OPTIONS} -o ${_name}.obj ${_name}.asm
                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR} )
         set_source_files_properties ( ${PROJECT_BINARY_DIR}/${_name}.asm PROPERTIES GENERATED 1 )
-        set ( ${PROJECT_NAME}_ASMOBJ ${${PROJECT_NAME}_ASMOBJ} ${PROJECT_BINARY_DIR}/${_name}.obj )
+        list ( APPEND ${PROJECT_NAME}_ASMOBJ ${PROJECT_BINARY_DIR}/${_name}.obj )
     elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "linux_amd64_gcc" )
         add_custom_command ( OUTPUT ${_name}.s
                 COMMAND perl ${_dir}/${_name}.pl elf > ${_name}.s
                 WORKING_DIRECTORY ${PROJECT_BINARY_DIR} )
         set_source_files_properties ( ${PROJECT_BINARY_DIR}/${_name}.s PROPERTIES GENERATED 1 )
         set_source_files_properties ( ${PROJECT_BINARY_DIR}/${_name}.s PROPERTIES LANGUAGE C )
-        set ( ${PROJECT_NAME}_ASMOBJ ${${PROJECT_NAME}_ASMOBJ} ${PROJECT_BINARY_DIR}/${_name}.s )
+        list ( APPEND ${PROJECT_NAME}_ASMOBJ ${PROJECT_BINARY_DIR}/${_name}.s )
     else ( )
         message ( FATAL_ERROR "Unsupported toolchain for NASM: [${${PROJECT_NAME}_TOOLCHAIN}]" )
     endif ( )

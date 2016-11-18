@@ -241,7 +241,6 @@ file ( COPY
         "${${PROJECT_NAME}_SOURCE_DIR}/e_os2.h" 
         "${${PROJECT_NAME}_SOURCE_DIR}/crypto/crypto.h" 
         "${${PROJECT_NAME}_SOURCE_DIR}/crypto/opensslv.h" 
-        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/opensslconf.h" 
         "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ebcdic.h" 
         "${${PROJECT_NAME}_SOURCE_DIR}/crypto/symhacks.h" 
         "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ossl_typ.h" 

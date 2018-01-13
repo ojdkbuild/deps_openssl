@@ -27,10 +27,6 @@ if ( NOT DEFINED STATICLIB_TOOLCHAIN )
             else ( )
                 set ( ${PROJECT_NAME}_TOOLCHAIN "windows_i386_msvc" )
             endif ( )
-        elseif ( APPLE )
-            set ( ${PROJECT_NAME}_TOOLCHAIN "macosx_amd64_clang" )
-        elseif ( UNIX )
-            set ( ${PROJECT_NAME}_TOOLCHAIN "linux_amd64_gcc" )
         else ( )
             message ( FATAL_ERROR "Cannot determine toolchain to use, please specify [${PROJECT_NAME}_TOOLCHAIN]" )
         endif ( )
@@ -48,7 +44,6 @@ if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_msvc" )
             -DWIN32_LEAN_AND_MEAN
             -DL_ENDIAN
             -D_CRT_SECURE_NO_DEPRECATE
-            -Dinline=__inline
             -Dsecure_getenv=getenv
             -DEAI_SYSTEM=EAI_FAIL
             -D_WIN32_WINNT=0x0501
@@ -57,6 +52,7 @@ if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_msvc" )
             -DOPENSSL_IA32_SSE2
             -DOPENSSL_BN_ASM_MONT
             -DOPENSSL_BN_ASM_GF2m
+            -DRC4_ASM
             -DSHA1_ASM
             -DSHA256_ASM
             -DSHA512_ASM
@@ -67,13 +63,14 @@ if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_msvc" )
             -DWHIRLPOOL_ASM
             -DGHASH_ASM
             -DOPENSSL_NO_RC5
-            -DOPENSSL_NO_MD2
             -DOPENSSL_NO_MDC2
+            -DOPENSSL_NO_SSL2
             -DOPENSSL_NO_SRP
             -DOPENSSL_NO_KRB5
             -DOPENSSL_NO_GOST
             -DOPENSSL_NO_JPAKE
             -DOPENSSL_NO_EC2M
+            -DOPENSSL_NO_WEAK_SSL_CIPHERS
             -DOPENSSL_NO_DYNAMIC_ENGINE
             -DMK1MF_BUILD
             -DMK1MF_PLATFORM_VC_WIN32 )
@@ -82,6 +79,8 @@ if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_msvc" )
             ${${PROJECT_NAME}_DEFINITIONS} )
     set ( ${PROJECT_NAME}_ASM_NASM_OPTIONS
             -f win32 )
+    set ( ${PROJECT_NAME}_OPTIONS
+            /wd4090 )
 elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_amd64_msvc" )
     set ( ${PROJECT_NAME}_DEFINITIONS
             -DOPENSSL_THREADS
@@ -92,7 +91,6 @@ elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_amd64_msvc" )
             -DUNICODE
             -D_UNICODE
             -D_CRT_SECURE_NO_DEPRECATE
-            -Dinline=__inline
             -Dsecure_getenv=getenv
             -DEAI_SYSTEM=EAI_FAIL
             -D_WIN32_WINNT=0x0601
@@ -101,6 +99,7 @@ elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_amd64_msvc" )
             -DOPENSSL_BN_ASM_MONT
             -DOPENSSL_BN_ASM_MONT5
             -DOPENSSL_BN_ASM_GF2m
+            -DRC4_ASM
             -DSHA1_ASM
             -DSHA256_ASM
             -DSHA512_ASM
@@ -110,14 +109,16 @@ elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_amd64_msvc" )
             -DBSAES_ASM
             -DWHIRLPOOL_ASM
             -DGHASH_ASM
+            -DECP_NISTZ256_ASM
             -DOPENSSL_NO_RC5
-            -DOPENSSL_NO_MD2
             -DOPENSSL_NO_MDC2
+            -DOPENSSL_NO_SSL2
             -DOPENSSL_NO_SRP
             -DOPENSSL_NO_KRB5
             -DOPENSSL_NO_GOST
             -DOPENSSL_NO_JPAKE
             -DOPENSSL_NO_EC2M
+            -DOPENSSL_NO_WEAK_SSL_CIPHERS
             -DOPENSSL_NO_DYNAMIC_ENGINE
             -DMK1MF_BUILD
             -DMK1MF_PLATFORM_VC_WIN64A )
@@ -127,32 +128,8 @@ elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_amd64_msvc" )
             -DNEAR
             -Ox
             -g )
-elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "linux_amd64_gcc" )
-    set ( ${PROJECT_NAME}_DEFINITIONS
-            -DOPENSSL_THREADS
-            -D_REENTRANT
-            -DL_ENDIAN
-            -DTERMIO
-            -DOPENSSL_IA32_SSE2
-            -DOPENSSL_BN_ASM_MONT
-            -DOPENSSL_BN_ASM_MONT5
-            -DOPENSSL_BN_ASM_GF2m
-            -DSHA1_ASM
-            -DSHA256_ASM
-            -DSHA512_ASM
-            -DMD5_ASM
-            -DAES_ASM
-            -DVPAES_ASM
-            -DBSAES_ASM
-            -DWHIRLPOOL_ASM
-            -DGHASH_ASM
-            -Dsecure_getenv=getenv )
-elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "android_[^_]+_gcc" )
-    set ( ${PROJECT_NAME}_DEFINITIONS
-            -DOPENSSL_THREADS
-            -D_REENTRANT
-            -DL_ENDIAN
-            -Dsecure_getenv=getenv )
+    set ( ${PROJECT_NAME}_OPTIONS
+            /wd4090 )
 else ( )
     message ( FATAL_ERROR "Unsupported toolchain: [${PROJECT_NAME}_TOOLCHAIN]" )
 endif ( )
@@ -244,6 +221,7 @@ file ( COPY
         "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ebcdic.h" 
         "${${PROJECT_NAME}_SOURCE_DIR}/crypto/symhacks.h" 
         "${${PROJECT_NAME}_SOURCE_DIR}/crypto/ossl_typ.h" 
+        "${${PROJECT_NAME}_SOURCE_DIR}/crypto/md2/md2.h" 
         "${${PROJECT_NAME}_SOURCE_DIR}/crypto/md4/md4.h" 
         "${${PROJECT_NAME}_SOURCE_DIR}/crypto/md5/md5.h" 
         "${${PROJECT_NAME}_SOURCE_DIR}/crypto/sha/sha.h" 
@@ -331,6 +309,7 @@ set ( ${PROJECT_NAME}_CRYPTO_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/o_str.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/o_dir.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/o_fips.c
+        # ${${PROJECT_NAME}_SOURCE_DIR}/crypto/fips_ers.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/o_init.c )
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "android_[^_]+_gcc" )
     list ( APPEND ${PROJECT_NAME}_CRYPTO_SRC
@@ -346,11 +325,18 @@ elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "linux_amd64_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/x86_64cpuid.pl )
 endif ( )
 
+# crypto/md2 
+set ( ${PROJECT_NAME}_CRYPTO_MD2_SRC 
+        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/md2/md2_dgst.c
+        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/md2/md2_one.c )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_MD2_SRC} )
+source_group ( "crypto_md2" FILES ${${PROJECT_NAME}_CRYPTO_MD2_SRC} )
+
 # crypto/md4 
 set ( ${PROJECT_NAME}_CRYPTO_MD4_SRC 
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/md4/md4_dgst.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/md4/md4_one.c )
-    list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_MD4_SRC} )
+list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_MD4_SRC} )
 source_group ( "crypto_md4" FILES ${${PROJECT_NAME}_CRYPTO_MD4_SRC} )
 
 # crypto/md5 
@@ -382,6 +368,8 @@ if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_[^_]+" )
 elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "[^_]+_amd64_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/sha/asm/sha1-x86_64.pl )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/sha/asm/sha512-x86_64.pl )
+    openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/sha/asm/sha1-mb-x86_64.pl )
+    openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/sha/asm/sha256-mb-x86_64.pl )
 endif ( )
 # special case for sha256
 if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_amd64_[^_]+" )
@@ -571,6 +559,8 @@ elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "[^_]+_amd64_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/aes/asm/bsaes-x86_64.pl )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/aes/asm/aesni-x86_64.pl )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/aes/asm/aesni-sha1-x86_64.pl )
+    openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/aes/asm/aesni-sha256-x86_64.pl )
+    openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/aes/asm/aesni-mb-x86_64.pl )
 endif ( )
 
 # crypto/camellia
@@ -624,6 +614,7 @@ if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "windows_i386_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/modes/asm/ghash-x86.pl )
 elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "[^_]+_amd64_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/modes/asm/ghash-x86_64.pl )
+    openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/modes/asm/aesni-gcm-x86_64.pl )
 endif ( )
 
 # crypto/bn
@@ -646,6 +637,7 @@ set ( ${PROJECT_NAME}_CRYPTO_BN_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/bn_prime.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/bn_err.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/bn_sqr.c
+        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/rsaz_exp.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/bn_recp.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/bn_mont.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/bn_mpi.c
@@ -676,7 +668,8 @@ elseif ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "[^_]+_amd64_[^_]+" )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/asm/x86_64-mont.pl )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/asm/x86_64-mont5.pl )
     openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/asm/x86_64-gf2m.pl )
-    openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/asm/modexp512-x86_64.pl )
+    openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/asm/rsaz-x86_64.pl )
+    openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/bn/asm/rsaz-avx2.pl )
 endif ( )
 
 # crypto/rsa
@@ -746,7 +739,9 @@ set ( ${PROJECT_NAME}_CRYPTO_DH_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/dh/dh_depr.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/dh/dh_ameth.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/dh/dh_pmeth.c
-        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/dh/dh_prn.c )
+        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/dh/dh_prn.c
+        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/dh/dh_kdf.c
+        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/dh/dh_rfc5114.c )
 list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_DH_SRC} )
 source_group ( "crypto_dh" FILES ${${PROJECT_NAME}_CRYPTO_DH_SRC} )
 
@@ -771,21 +766,25 @@ set ( ${PROJECT_NAME}_CRYPTO_EC_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/eck_prn.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/ecp_nistp224.c
         # ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/ecp_nistp256.c
-        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/ecp_nistp521.c
+        # ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/ecp_nistp521.c
         # ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/ecp_nistputil.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/ecp_oct.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/ec2_oct.c
-        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/ec_oct.c )
+        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/ec_oct.c
+        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/ecp_nistz256.c )
 list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_EC_SRC} )
 source_group ( "crypto_ec" FILES ${${PROJECT_NAME}_CRYPTO_EC_SRC} )
-
+if ( ${PROJECT_NAME}_TOOLCHAIN MATCHES "[^_]+_amd64_[^_]+" )
+    openssl_asm_compile ( ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ec/asm/ecp_nistz256-x86_64.pl )
+endif ( )
 
 # crypto/ecdh
 set ( ${PROJECT_NAME}_CRYPTO_ECDH_SRC 
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdh/ech_lib.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdh/ech_ossl.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdh/ech_key.c
-        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdh/ech_err.c )
+        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdh/ech_err.c
+        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/ecdh/ech_kdf.c )
 list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_ECDH_SRC} )
 source_group ( "crypto_ecdh" FILES ${${PROJECT_NAME}_CRYPTO_ECDH_SRC} )
 
@@ -935,6 +934,7 @@ set ( ${PROJECT_NAME}_CRYPTO_EVP_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/evp/pmeth_gn.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/evp/m_sigver.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/evp/e_aes_cbc_hmac_sha1.c
+        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/evp/e_aes_cbc_hmac_sha256.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/evp/e_rc4_hmac_md5.c )
 list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_EVP_SRC} )
 source_group ( "crypto_evp" FILES ${${PROJECT_NAME}_CRYPTO_EVP_SRC} )
@@ -1104,7 +1104,8 @@ set ( ${PROJECT_NAME}_CRYPTO_X509V3_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509v3/pcy_tree.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509v3/pcy_lib.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509v3/v3_asid.c
-        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509v3/v3_addr.c )
+        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509v3/v3_addr.c
+        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/x509v3/v3_scts.c )
 list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_X509V3_SRC} )
 source_group ( "crypto_x509v3" FILES ${${PROJECT_NAME}_CRYPTO_X509V3_SRC} )
 
@@ -1114,6 +1115,7 @@ set ( ${PROJECT_NAME}_CRYPTO_CMS_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cms/cms_asn1.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cms/cms_att.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cms/cms_io.c
+        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cms/cms_kari.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cms/cms_smime.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cms/cms_err.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/cms/cms_sd.c
@@ -1212,7 +1214,6 @@ set ( ${PROJECT_NAME}_CRYPTO_ENGINE_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/engine/eng_cnf.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/engine/eng_dyn.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/engine/eng_cryptodev.c
-        ${${PROJECT_NAME}_SOURCE_DIR}/crypto/engine/eng_rsax.c
         ${${PROJECT_NAME}_SOURCE_DIR}/crypto/engine/eng_rdrand.c )
 list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_CRYPTO_ENGINE_SRC} )
 source_group ( "crypto_engine" FILES ${${PROJECT_NAME}_CRYPTO_ENGINE_SRC} )
@@ -1329,13 +1330,15 @@ set ( ${PROJECT_NAME}_SSL_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/t1_clnt.c
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/t1_lib.c
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/t1_enc.c
+        ${${PROJECT_NAME}_SOURCE_DIR}/ssl/t1_ext.c
+        ${${PROJECT_NAME}_SOURCE_DIR}/ssl/t1_reneg.c
+        ${${PROJECT_NAME}_SOURCE_DIR}/ssl/t1_trce.c
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/d1_meth.c
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/d1_srvr.c
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/d1_clnt.c
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/d1_lib.c
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/d1_pkt.c
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/d1_both.c
-        ${${PROJECT_NAME}_SOURCE_DIR}/ssl/d1_enc.c
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/d1_srtp.c
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl_lib.c
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl_err2.c
@@ -1347,10 +1350,10 @@ set ( ${PROJECT_NAME}_SSL_SRC
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl_asn1.c
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl_txt.c
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl_algs.c
+        ${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl_conf.c
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/bio_ssl.c
         ${${PROJECT_NAME}_SOURCE_DIR}/ssl/ssl_err.c
-        ${${PROJECT_NAME}_SOURCE_DIR}/ssl/kssl.c
-        ${${PROJECT_NAME}_SOURCE_DIR}/ssl/t1_reneg.c )
+        ${${PROJECT_NAME}_SOURCE_DIR}/ssl/kssl.c )
 list ( APPEND ${PROJECT_NAME}_SRC ${${PROJECT_NAME}_SSL_SRC} )
 source_group ( "ssl" FILES ${${PROJECT_NAME}_SSL_SRC} )
 
@@ -1362,6 +1365,7 @@ target_include_directories ( ${PROJECT_NAME} BEFORE PRIVATE
     ${CMAKE_CURRENT_BINARY_DIR}/include
     ${CMAKE_CURRENT_BINARY_DIR}/include_private )
 target_compile_definitions ( ${PROJECT_NAME} PRIVATE ${${PROJECT_NAME}_DEFINITIONS} )
+target_compile_options ( ${PROJECT_NAME} PRIVATE ${${PROJECT_NAME}_OPTIONS} )
 add_custom_target ( ${PROJECT_NAME}_asm DEPENDS ${${PROJECT_NAME}_ASMOBJ} )
 add_dependencies ( ${PROJECT_NAME} ${PROJECT_NAME}_asm )
 

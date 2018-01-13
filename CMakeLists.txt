@@ -20,7 +20,7 @@ project ( ojdkbuild_openssl C CXX )
 set ( ${PROJECT_NAME}_OJDKBUILD_VERSION 1.0.1e-1 )
 
 # static library
-add_subdirectory ( ${CMAKE_CURRENT_LIST_DIR}/resources/openssl_101e_cmake ${CMAKE_CURRENT_BINARY_DIR}/lookaside_openssl )
+add_subdirectory ( ${CMAKE_CURRENT_LIST_DIR}/resources/openssl_cmake ${CMAKE_CURRENT_BINARY_DIR}/lookaside_openssl )
 
 # exported library
 add_custom_target ( ${PROJECT_NAME} DEPENDS lookaside_openssl )
